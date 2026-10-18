@@ -1,0 +1,311 @@
+SUPERMARKET SALES — BUSINESS METRICS AND CALCULATIONS
+
+This document explains the main business metrics used when analyzing the supermarket sales dataset. It provides definitions, relationships between metrics, and guidance on interpreting them.
+
+
+1. REVENUE
+
+Revenue is the recorded amount of money generated from sales transactions.
+
+Revenue is the primary metric for measuring sales performance.
+
+Revenue can be analyzed by:
+- Date
+- Month
+- City
+- Country
+- Product
+- Product Category
+- Customer Type
+- Gender
+- Payment Method
+
+When answering questions about total sales or total revenue, use the recorded Revenue field unless the user specifically asks for calculated or validation revenue.
+
+
+2. COGS
+
+COGS stands for Cost of Goods Sold.
+
+COGS represents the cost associated with the goods that were sold.
+
+It is an important cost metric because it allows the business to determine how much of its revenue remains after accounting for the cost of the goods sold.
+
+
+3. PROFIT
+
+Profit represents the amount remaining after subtracting COGS from Revenue.
+
+For this dataset:
+
+Profit = Revenue - COGS
+
+Profit can be analyzed by:
+- Product
+- Product Category
+- City
+- Country
+- Customer Type
+- Payment Method
+- Date
+
+
+4. GROSS PROFIT MARGIN
+
+Profit margin measures profit relative to revenue.
+
+The standard calculation is:
+
+Profit Margin = (Profit / Revenue) × 100
+
+A higher profit margin means that a larger proportion of revenue remains as profit after accounting for COGS.
+
+Profit margin should be interpreted together with revenue volume. A product can have a high profit margin but relatively low total profit if its revenue is small.
+
+
+5. QUANTITY
+
+Quantity represents the number of units sold.
+
+Total quantity can be calculated by summing the Quantity field.
+
+Quantity is useful for understanding sales volume independently of the monetary value of sales.
+
+For example, a product may have high quantity but lower revenue if its selling price is relatively low.
+
+
+6. UNIT COST
+
+Unit Cost represents the cost associated with one unit of a product.
+
+It can be used to understand the cost structure of individual products.
+
+
+7. SALES PRICE
+
+Sales Price represents the selling price associated with a unit of a product.
+
+It can be compared with Unit Cost to understand the price and cost relationship.
+
+
+8. DISCOUNT
+
+Discount represents the monetary discount associated with a transaction or sale.
+
+Discounts can reduce the amount of revenue realized from a sale.
+
+Discount-related analysis can include:
+- Total discount
+- Average discount
+- Revenue after discount
+- Revenue reduction
+- Discount percentage
+
+
+9. DISCOUNT PERCENTAGE
+
+Discount Percentage represents the discount expressed as a percentage.
+
+It allows discounts to be compared across transactions with different monetary values.
+
+A percentage discount is different from the monetary Discount field.
+
+
+10. REVENUE AFTER DISCOUNT
+
+Revenue After Discount represents revenue after accounting for the applicable discount.
+
+It can be used to study how discounts affect realized revenue.
+
+
+11. REVENUE REDUCTION
+
+Revenue Reduction represents the reduction in revenue associated with discounts or other applicable reductions.
+
+It can be used to quantify the financial effect of reductions on sales.
+
+
+12. GROSS SALES
+
+Gross Sales represents sales before applicable reductions such as discounts.
+
+Comparing Gross Sales with Revenue After Discount can help analyze the effect of discounts on realized sales.
+
+
+13. AVERAGE TRANSACTION VALUE
+
+Average Transaction Value represents the average revenue generated per transaction.
+
+It can be calculated as:
+
+Average Transaction Value = Total Revenue / Number of Transactions
+
+It can be used to compare customer groups, cities, payment methods, or other segments.
+
+
+14. TOTAL REVENUE
+
+Total Revenue is the sum of the Revenue field across the relevant transactions.
+
+Example:
+
+Total Revenue = SUM(Revenue)
+
+
+15. TOTAL PROFIT
+
+Total Profit is the sum of the Profit field across the relevant transactions.
+
+Example:
+
+Total Profit = SUM(Profit)
+
+
+16. TOTAL COGS
+
+Total COGS is the sum of the COGS field across the relevant transactions.
+
+Example:
+
+Total COGS = SUM(COGS)
+
+
+17. TOTAL QUANTITY
+
+Total Quantity is the sum of all units sold.
+
+Example:
+
+Total Quantity = SUM(Quantity)
+
+
+18. NUMBER OF TRANSACTIONS
+
+The number of transactions represents the number of records included in the analysis.
+
+Example:
+
+Number of Transactions = COUNT(Transactions)
+
+In this dataset, each row represents a sales transaction.
+
+
+19. AVERAGE REVENUE
+
+Average Revenue represents the average revenue generated per transaction.
+
+It can be calculated as:
+
+Average Revenue = Total Revenue / Number of Transactions
+
+
+20. AVERAGE PROFIT
+
+Average Profit represents the average profit generated per transaction.
+
+It can be calculated as:
+
+Average Profit = Total Profit / Number of Transactions
+
+
+21. AVERAGE COGS
+
+Average COGS represents the average COGS associated with a transaction.
+
+It can be calculated as:
+
+Average COGS = Total COGS / Number of Transactions
+
+
+22. REVENUE VS PROFIT
+
+Revenue and profit measure different aspects of business performance.
+
+Revenue measures the money generated from sales.
+
+Profit measures what remains after COGS is deducted from revenue.
+
+Therefore:
+
+Profit = Revenue - COGS
+
+A business can have high revenue without having equally high profit if its costs are high.
+
+
+23. PROFITABILITY VS SALES VOLUME
+
+High revenue does not automatically mean high profitability.
+
+When evaluating products or categories, consider both:
+- Total Revenue
+- Total Profit
+- Profit Margin
+- Quantity Sold
+
+A product with high revenue may generate the most total profit because of its large sales volume, even if another product has a slightly higher profit margin.
+
+
+24. TIME-BASED METRICS
+
+Revenue, profit, COGS, quantity, and transactions can be aggregated by time.
+
+Examples include:
+- Daily revenue
+- Monthly revenue
+- Monthly profit
+- Monthly transaction count
+- Monthly quantity sold
+
+Monthly analysis is useful for identifying trends and changes in business performance over time.
+
+
+25. SEGMENT ANALYSIS
+
+Business metrics can be grouped by different dimensions.
+
+Examples:
+
+Revenue by Product Category
+Profit by Product
+Revenue by City
+Revenue by Customer Type
+Revenue by Payment Method
+Profit Margin by Product Category
+Quantity by Product
+Transactions by Customer Type
+
+Grouping allows the business to compare different segments of its operations.
+
+
+26. DATA VALIDATION METRICS
+
+Several columns exist specifically to support data validation.
+
+These include:
+- Calculated Revenue
+- Revenue Difference
+- Calculated Profit
+- Profit Difference
+- Calculated COGS
+- COGS Difference
+- Discount Difference
+- Reduction Difference
+
+These fields should not automatically replace the recorded business fields.
+
+When a user asks for the official recorded revenue, profit, or COGS, use the corresponding recorded field.
+
+Validation fields should primarily be used when investigating calculations, discrepancies, or data quality.
+
+
+IMPORTANT INTERPRETATION RULE
+
+The RAG assistant should distinguish between:
+
+1. Metric definitions
+2. Metric calculations
+3. Actual metric values
+
+Definitions and explanations can be retrieved from this knowledge document.
+
+Actual numerical values should be obtained from the underlying dataset through the appropriate analytical/data-querying system rather than invented from the knowledge document.

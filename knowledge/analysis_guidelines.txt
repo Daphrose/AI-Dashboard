@@ -1,0 +1,534 @@
+SUPERMARKET SALES — ANALYSIS GUIDELINES
+
+This document provides guidelines for analyzing and interpreting questions about the supermarket sales dataset.
+
+
+1. GENERAL ANALYSIS PRINCIPLE
+
+The supermarket dataset contains transaction-level sales information.
+
+Questions involving actual numerical values should be answered using the underlying dataset through SQL or another appropriate data-analysis tool.
+
+The knowledge base should be used to understand:
+- What a metric means
+- What a column represents
+- How metrics relate to each other
+- How business questions should be interpreted
+
+The knowledge base should not be used to invent numerical results.
+
+
+2. REVENUE QUESTIONS
+
+Questions such as:
+
+- What is the total revenue?
+- Which product generated the most revenue?
+- Which city has the highest revenue?
+- What is the monthly revenue?
+- Which category generated the most sales?
+
+should use the Revenue field.
+
+Typical operations include:
+
+SUM(Revenue)
+GROUP BY Product
+GROUP BY Product Category
+GROUP BY City
+GROUP BY Month
+ORDER BY Revenue DESC
+
+
+3. PROFIT QUESTIONS
+
+Questions such as:
+
+- What is the total profit?
+- Which product generated the most profit?
+- Which category is most profitable?
+- What was the profit in a particular month?
+
+should use the Profit field.
+
+Typical operations include:
+
+SUM(Profit)
+GROUP BY Product
+GROUP BY Product Category
+GROUP BY Month
+
+
+4. PROFIT MARGIN QUESTIONS
+
+Questions involving profitability relative to revenue should use:
+
+Profit Margin = (Profit / Revenue) × 100
+
+For grouped analysis, calculate:
+
+SUM(Profit) / SUM(Revenue) × 100
+
+Do not simply average individual transaction-level profit percentages unless the question specifically asks for an average of transaction-level margins.
+
+
+5. PRODUCT ANALYSIS
+
+Product-level questions can involve:
+
+- Revenue
+- Profit
+- Quantity
+- COGS
+- Sales Price
+- Unit Cost
+- Profit Margin
+- Discount
+
+Examples:
+
+"Which product sold the most?"
+→ Compare total Quantity.
+
+"Which product generated the most revenue?"
+→ Compare total Revenue.
+
+"Which product generated the most profit?"
+→ Compare total Profit.
+
+"Which product has the highest profit margin?"
+→ Compare Profit relative to Revenue.
+
+
+6. PRODUCT CATEGORY ANALYSIS
+
+Product categories can be compared using:
+
+- Total Revenue
+- Total Profit
+- Total Quantity
+- Total COGS
+- Profit Margin
+- Transaction count
+
+Category-level analysis should group records by Product Category.
+
+
+7. CITY ANALYSIS
+
+City-level questions should normally group records by City.
+
+Examples:
+
+"Which city generated the most revenue?"
+→ SUM(Revenue) grouped by City.
+
+"Which city generated the most profit?"
+→ SUM(Profit) grouped by City.
+
+"How many transactions occurred in each city?"
+→ COUNT of transactions grouped by City.
+
+
+8. COUNTRY ANALYSIS
+
+Country-level questions should group records by Country.
+
+Possible metrics include:
+
+- Revenue
+- Profit
+- Quantity
+- COGS
+- Transaction count
+- Average transaction value
+
+Country comparisons should use the same metric across countries when making comparisons.
+
+
+9. CUSTOMER TYPE ANALYSIS
+
+Customer Type can be used to compare customer segments such as Member and Normal.
+
+Possible metrics include:
+
+- Total Revenue
+- Total Profit
+- Quantity
+- Transaction count
+- Average Revenue per Transaction
+
+For example:
+
+Revenue by Customer Type
+→ GROUP BY Customer Type and SUM Revenue.
+
+Transactions by Customer Type
+→ GROUP BY Customer Type and COUNT transactions.
+
+
+10. GENDER ANALYSIS
+
+Gender can be used as a customer segmentation variable.
+
+Possible analyses include:
+
+- Revenue by Gender
+- Profit by Gender
+- Quantity by Gender
+- Transaction count by Gender
+- Average transaction value by Gender
+
+
+11. PAYMENT METHOD ANALYSIS
+
+Payment Method can be used to compare transaction behavior across payment methods.
+
+Possible metrics include:
+
+- Revenue
+- Profit
+- Transaction count
+- Average transaction value
+- Quantity
+
+For example:
+
+Revenue by Payment Method
+→ GROUP BY Payment Method and SUM Revenue.
+
+
+12. TIME-BASED ANALYSIS
+
+Date should be used for questions involving time.
+
+Examples:
+
+- Daily revenue
+- Monthly revenue
+- Monthly profit
+- Revenue trends
+- Profit trends
+- Transaction trends
+- Sales growth over time
+
+For monthly analysis, transactions should be grouped by year and month rather than month name alone when the dataset could contain multiple years.
+
+
+13. TOP-N QUESTIONS
+
+Questions containing phrases such as:
+
+- Top 5
+- Top 10
+- Best-selling
+- Highest
+- Largest
+- Most profitable
+
+normally require aggregation followed by descending sorting.
+
+Example:
+
+Top 10 products by revenue
+→ SUM Revenue by Product
+→ ORDER BY total revenue DESC
+→ LIMIT 10
+
+
+14. LOWEST / BOTTOM-N QUESTIONS
+
+Questions containing:
+
+- Lowest
+- Least
+- Bottom 5
+- Bottom 10
+- Worst-performing
+
+normally require aggregation followed by ascending sorting.
+
+Example:
+
+Bottom 10 products by revenue
+→ SUM Revenue by Product
+→ ORDER BY total revenue ASC
+→ LIMIT 10
+
+
+15. TRANSACTION COUNT
+
+A transaction count represents the number of records included in the analysis.
+
+When counting transactions, avoid counting a monetary field such as Revenue.
+
+A transaction count can be used to calculate average revenue per transaction:
+
+Average Revenue per Transaction =
+Total Revenue / Transaction Count
+
+
+16. QUANTITY ANALYSIS
+
+Quantity represents units sold.
+
+Questions involving:
+
+- Most units sold
+- Best-selling by volume
+- Sales volume
+- Total units sold
+
+should use SUM(Quantity).
+
+Revenue should not be used as a substitute for Quantity.
+
+
+17. COST ANALYSIS
+
+COGS represents the cost of goods sold.
+
+Questions involving total cost should normally use:
+
+SUM(COGS)
+
+Questions involving average transaction-level COGS can use:
+
+AVG(COGS)
+
+
+18. DISCOUNT ANALYSIS
+
+Discount questions may involve:
+
+- Total Discount
+- Average Discount
+- Discount Percentage
+- Revenue After Discount
+- Revenue Reduction
+
+The assistant should distinguish between a monetary discount and a percentage discount.
+
+Discount and Discount Percentage are not interchangeable.
+
+
+19. REVENUE AND PROFIT COMPARISON
+
+Revenue and Profit should not be treated as the same metric.
+
+Revenue measures sales generated.
+
+Profit measures the amount remaining after COGS.
+
+Therefore:
+
+Profit = Revenue - COGS
+
+When comparing business performance, both Revenue and Profit may be relevant.
+
+
+20. HIGH REVENUE DOES NOT ALWAYS MEAN HIGH PROFIT MARGIN
+
+A product or category can generate high total revenue while having a lower profit margin than another product or category.
+
+Therefore, questions about:
+
+"most revenue"
+
+"most profit"
+
+and
+
+"highest profit margin"
+
+must be treated as different questions.
+
+
+21. AVERAGES AND TOTALS
+
+The assistant should distinguish between:
+
+SUM
+→ Total amount
+
+AVG
+→ Average value
+
+COUNT
+→ Number of records/transactions
+
+For example:
+
+Total Revenue
+→ SUM(Revenue)
+
+Average Revenue
+→ AVG(Revenue)
+
+Number of Transactions
+→ COUNT of transactions
+
+
+22. GROUPED ANALYSIS
+
+When a user asks "by" something, the relevant field is normally used as a grouping dimension.
+
+Examples:
+
+"Revenue by product"
+→ GROUP BY Product
+
+"Profit by category"
+→ GROUP BY Product Category
+
+"Revenue by city"
+→ GROUP BY City
+
+"Sales by customer type"
+→ GROUP BY Customer Type
+
+"Revenue by payment method"
+→ GROUP BY Payment Method
+
+
+23. FILTERED ANALYSIS
+
+Questions containing conditions such as:
+
+- in a particular city
+- for Electronics
+- for Members
+- in 2025
+- during April
+- using Cash
+- for a specific product
+
+require filtering the relevant records before calculating the requested metric.
+
+
+24. COMBINED FILTERS
+
+Multiple conditions should be applied together when the question contains multiple constraints.
+
+Example:
+
+"What was the revenue from Electronics purchased by Members in Berlin?"
+
+The analysis should filter:
+
+Product Category = Electronics
+AND Customer Type = Member
+AND City = Berlin
+
+Then calculate the requested Revenue.
+
+
+25. COMPARISON QUESTIONS
+
+When comparing two or more groups, use the same metric and calculation method for each group.
+
+Examples:
+
+- Member vs Normal revenue
+- Electronics vs Clothing profit
+- Cash vs Card transactions
+- City A vs City B revenue
+
+Comparisons should be based on the actual underlying data.
+
+
+26. PERCENTAGE CONTRIBUTION
+
+When a question asks how much a category or product contributes to total revenue, calculate:
+
+Percentage Contribution =
+(Group Revenue / Total Revenue) × 100
+
+The denominator should correspond to the relevant total for the question.
+
+
+27. DATA VALIDATION
+
+The dataset contains calculated and difference fields used for validation.
+
+These include:
+
+- Calculated Revenue
+- Revenue Difference
+- Calculated Profit
+- Profit Difference
+- Calculated COGS
+- COGS Difference
+- Discount Difference
+- Reduction Difference
+
+These fields should be used when the user asks about data validation, discrepancies, or calculation checks.
+
+They should not automatically replace the primary recorded fields.
+
+
+28. HANDLING AMBIGUOUS QUESTIONS
+
+If a question is ambiguous, identify the most reasonable interpretation from the dataset context.
+
+For example:
+
+"Which product sold the most?"
+
+This normally refers to Quantity sold.
+
+"Which product made the most money?"
+
+This normally refers to Revenue.
+
+"Which product was most profitable?"
+
+This normally refers to Profit unless the user specifically asks for profit margin.
+
+
+29. NUMERICAL ACCURACY
+
+Actual numerical answers should come from the underlying dataset.
+
+The assistant should not estimate or invent values when the required data can be queried.
+
+Calculations should preserve the appropriate precision and should only be rounded for presentation.
+
+
+30. RAG VS DATA ANALYSIS
+
+The final AI assistant should distinguish between knowledge retrieval and numerical analysis.
+
+RAG is appropriate for questions such as:
+
+- What does COGS mean?
+- What is an SKU?
+- What does Revenue represent?
+- How is profit defined?
+- What does Discount Percentage mean?
+
+SQL or another data-analysis tool is appropriate for questions such as:
+
+- What is the total revenue?
+- Which product generated the most profit?
+- What was the revenue in April 2025?
+- Which city had the highest sales?
+- What percentage of revenue came from Electronics?
+
+Some questions may require both.
+
+For example:
+
+"What is profit margin and which category has the highest profit margin?"
+
+The knowledge base can explain what profit margin means, while the underlying dataset should be queried to calculate and identify the relevant category.
+
+
+31. SOURCE PRIORITY
+
+When answering numerical questions:
+
+1. Use the underlying dataset for actual values.
+2. Use the knowledge base for definitions and interpretation.
+3. Use calculated fields only when validation or calculation analysis is requested.
+4. Never invent numerical results that are not supported by the dataset.
